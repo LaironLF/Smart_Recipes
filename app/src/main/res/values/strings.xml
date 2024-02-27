@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Smart Recipes</string>
+    <string name="title_category">Категории</string>
+    <string name="title_new_recipes">Новые рецепты</string>
+    <string name="title_top_rating">Топ рейтинга</string>
+    <string name="nav_open">open</string>
+    <string name="nav_close">close</string>
+</resources>

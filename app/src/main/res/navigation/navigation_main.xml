@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.laironlf.smartRecipes.presentation.fragments.home.HomeFragment"
+        android:label="Главная"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.laironlf.smartRecipes.presentation.fragments.recipes.RecipesFragment"
+        android:label="Рецепты"
+        tools:layout="@layout/fragment_recipes" >
+        <action
+            android:id="@+id/action_recipesFragment_to_recipeDetailInfoFragment"
+            app:destination="@id/recipeDetailInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fridgeFragment"
+        android:name="com.laironlf.smartRecipes.presentation.fragments.fridge.FridgeFragment"
+        android:label="Холодильник"
+        tools:layout="@layout/fragment_fridge" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.laironlf.smartRecipes.presentation.fragments.user.UserFragment"
+        android:label="Пользователь"
+        tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.laironlf.smartRecipes.presentation.fragments.settings.SettingsFragment"
+        android:label="Настройки"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/recipeDetailInfoFragment"
+        android:name="com.laironlf.smartRecipes.presentation.fragments.recipedetailinfo.RecipeDetailInfoFragment"
+        android:label="Обзор рецепта"
+        tools:layout="@layout/fragment_recipe_detail_info" />
+</navigation>

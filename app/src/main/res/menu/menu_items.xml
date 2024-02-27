@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/navigation_main_items">
+        <item
+            android:id="@+id/userFragment"
+            android:title="user"
+            android:icon="@drawable/ic_user"/>
+        <item
+            android:title="home"
+            android:icon="@drawable/ic_home"
+            android:id="@+id/homeFragment"/>
+        <item
+            android:title="recipes"
+            android:icon="@drawable/ic_search"
+            android:id="@+id/recipesFragment"/>
+        <item
+            android:id="@+id/fridgeFragment"
+            android:title="fridge"
+            android:icon="@drawable/ic_fridge"/>
+        <item
+            android:id="@+id/settingsFragment"
+            android:title="settings"
+            android:icon="@drawable/ic_settings"/>
+    </group>
+</menu>

@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SmartRecipes" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/orange_day</item>
+        <item name="colorSecondary">@color/yellow_day</item>
+        <item name="colorPrimaryVariant">@color/orange_day_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryDark">?attr/backgroundColor</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorSurface">@color/white</item>
+<!--        <item name="backgroundColor">@color/white</item>-->
+<!--        <item name="background">@color/white</item>-->
+<!--        <item name="android:navigationBarColor">@color/white</item>-->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+    </style>
+    <style name="Theme.SmartRecipes" parent="Base.Theme.SmartRecipes" />
+
+
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/orange_day</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.SmartRecipes</item>
+    </style>
+
+    <style name="Theme.SmartRecipes.SearchView" parent="Widget.AppCompat.SearchView" >
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/orange_day</item>
+    </style>
+</resources>
