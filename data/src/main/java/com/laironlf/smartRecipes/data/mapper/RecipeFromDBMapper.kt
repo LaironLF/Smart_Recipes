@@ -17,7 +17,8 @@ fun RecipeDB.mapToRecipe(): Recipe {
         time = this.time,
         kcal = this.kkal,
         ingredients = emptyList(),
-        matchesProducts = emptyList()
+        matchesProducts = emptyList(),
+        imageUrl = "null"
     )
 }
 

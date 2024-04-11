@@ -6,6 +6,7 @@ import java.time.Duration
 open class Recipe (
     val id: Int,
     val title: String,
+    val imageUrl: String,
     val time: String,
     val kcal: Int,
     val ingredients: List<Ingredient>,

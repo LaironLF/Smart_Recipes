@@ -37,7 +37,7 @@ class RecipeMiniListAdapter(val onRecipeClick: (recipe: Recipe) -> Unit): Recycl
         holder.tvKcal.text = "${recipe.kcal} ккал"
         holder.tvTime.text = recipe.time
         Picasso.get()
-            .load("https://telegra.ph/file/d8093794d3c21315adeea.jpg")
+            .load(recipe.imageUrl)
             .into(holder.ivImage)
     }
 

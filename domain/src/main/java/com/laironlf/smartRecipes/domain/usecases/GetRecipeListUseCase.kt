@@ -17,7 +17,7 @@ class GetRecipeListUseCase(
         if (getRecipesListParams.fetchType is FetchType.Now && getRecipesListParams.productsId == null)
             getRecipesListParams.productsId = userProducts.map { it.id }
 
-        val recipes = recipeRepository.getRecipesList(getRecipesListParams)?: emptyList()
+        val recipes = recipeRepository.getRecipesList(getRecipesListParams)
         recipes.map { recipe ->
             recipe.matchesProducts = userProducts.filter { product ->
                 recipe.ingredients.any { ingredient ->

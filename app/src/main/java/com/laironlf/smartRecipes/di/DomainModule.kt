@@ -1,7 +1,7 @@
 package com.laironlf.smartRecipes.di
 
 import android.content.Context
-import com.laironlf.smartRecipes.data.api.smartRecipesApi.RecipesApiService
+import com.laironlf.smartRecipes.data.api.RecipesApiService
 import com.laironlf.smartRecipes.data.implementation.ProductRepositoryImpl
 import com.laironlf.smartRecipes.data.implementation.RecipeRepositoryImpl
 import com.laironlf.smartRecipes.domain.repository.ProductRepository

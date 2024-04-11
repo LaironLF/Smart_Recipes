@@ -2,13 +2,12 @@ package com.laironlf.smartRecipes.di
 
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.laironlf.smartRecipes.data.api.smartRecipesApi.RecipesApiService
+import com.laironlf.smartRecipes.data.api.RecipesApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import javax.inject.Singleton

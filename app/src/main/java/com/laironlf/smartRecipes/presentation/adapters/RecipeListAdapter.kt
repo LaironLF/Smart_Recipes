@@ -1,6 +1,8 @@
 package com.laironlf.smartRecipes.presentation.adapters
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +40,7 @@ class RecipeListAdapter(private val onItemClick: (Recipe) -> Unit) : RecyclerVie
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe = items[position]
+        Log.d(TAG, "onBindViewHolder: ${recipe.imageUrl}")
         holder.tvTime.text = recipe.time
         holder.tvKkal.text = "${recipe.kcal} ккал"
         holder.tvTitle.text = recipe.title
@@ -45,7 +48,7 @@ class RecipeListAdapter(private val onItemClick: (Recipe) -> Unit) : RecyclerVie
         holder.tvFridgeCount.isChecked = recipe.matchesProducts.size == recipe.ingredients.size
 //        holder.recipeImage.setImageResource(R.drawable.test_image)
         Picasso.get()
-            .load("https://telegra.ph/file/d8093794d3c21315adeea.jpg")
+            .load(recipe.imageUrl)
             .into(holder.recipeImage)
         holder.itemView.setOnClickListener {
             onItemClick(recipe)

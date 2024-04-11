@@ -1,9 +1,12 @@
 package com.laironlf.smartRecipes.data.implementation
 
 import android.content.Context
-import com.laironlf.smartRecipes.data.api.smartRecipesApi.RecipesApiService
+import com.laironlf.smartRecipes.data.api.RecipesApiService
+import com.laironlf.smartRecipes.data.cache.AppCaching
 import com.laironlf.smartRecipes.data.mapper.mapToDB
+import com.laironlf.smartRecipes.data.mapper.mapToDTO
 import com.laironlf.smartRecipes.data.mapper.mapToProduct
+import com.laironlf.smartRecipes.data.mapper.mapToRecipe
 import com.laironlf.smartRecipes.data.room.AppRecipesDatabase
 import com.laironlf.smartRecipes.data.room.entity.UserProductDB
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
@@ -15,12 +18,15 @@ class ProductRepositoryImpl(
     private val context: Context
 ): ProductRepository {
     private val roomDBDao = AppRecipesDatabase.getDataBase(context).getRoomDBDao()
+    private val appCache = AppCaching(context);
 
 
     override suspend fun getProductList(params: GetProductListParams?): List<Product> {
 
         val productList = if (params?.fetchUserProducts == true){
-            roomDBDao.getUserProducts().map { it.mapToProduct() }
+//            roomDBDao.getUserProducts().map { it.mapToProduct() }
+            appCache.getUserProductList().map { it.mapToProduct() }
+
         } else {
             getAllProductList(params)
         }
@@ -31,24 +37,26 @@ class ProductRepositoryImpl(
         var productList: List<Product>
         try {
             productList = api.getProducts().map { it.mapToProduct() }
-            roomDBDao.clearProductList()
-            roomDBDao.addProductList(productList.map { it.mapToDB() })
+            appCache.clearProductList()
+            appCache.addProductList(productList.map { it.mapToDTO() })
         } catch (e: Exception){
-            productList = roomDBDao.getProductList().map { it.mapToProduct() }
+            productList = appCache.getProductList().map { it.mapToProduct() }
         }
         return productList
     }
 
     override suspend fun saveUserProduct(product: Product): Boolean {
-        if(roomDBDao.getProductById(product.id) == null)
-            roomDBDao.addProduct(product.mapToDB())
-        if(roomDBDao.getUserProductById(product.id) == null)
-            roomDBDao.addProductToUserList(UserProductDB(0, product.id))
+//        if(roomDBDao.getProductById(product.id) == null)
+//            roomDBDao.addProduct(product.mapToDB())
+//        if(roomDBDao.getUserProductById(product.id) == null)
+//            roomDBDao.addProductToUserList(UserProductDB(0, product.id))
+        appCache.saveUserProductToCache(product.mapToDTO())
         return true
     }
 
     override suspend fun deleteUserProduct(product: Product): Boolean {
-        roomDBDao.deleteProductFromUserList(product.id)
+//        roomDBDao.deleteProductFromUserList(product.id)
+        appCache.deleteUserProductFromCache(product.mapToDTO())
         return true
     }
 }

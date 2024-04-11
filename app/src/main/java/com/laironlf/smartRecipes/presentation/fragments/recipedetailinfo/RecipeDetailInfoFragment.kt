@@ -75,7 +75,7 @@ class RecipeDetailInfoFragment : Fragment() {
                 binding.tvDishCookTime.text = recipe.time
                 binding.tvDishFridge.text = "${recipe.matchesProducts.size} / ${recipe.ingredients.size}"
                 Picasso.get()
-                    .load("https://telegra.ph/file/d8093794d3c21315adeea.jpg")
+                    .load(recipe.imageUrl)
                     .into(binding.ivRecipeImage)
             } else {
                 binding.clViewHolder.visibility = View.GONE
