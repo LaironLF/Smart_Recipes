@@ -3,7 +3,6 @@ package com.laironlf.circlemenu
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
@@ -110,7 +109,9 @@ class CircleMenu @JvmOverloads constructor(
             .setEnterAnim(R.anim.enter_from_up_anim)
             .setExitAnim(R.anim.exit_to_down_anim)
             .build())
-        Log.d("TAG", "itemClicked: ${view.isSelected}")
+        val drawer = parent as BetterDrawerLayout
+        drawer.close()
+//        Log.d("TAG", "itemClicked: ${view.isSelected}")
     }
 
     private class MenuViewHolder(rootView: ViewGroup, val optionRadius: Int, val optionDiameter: Int) {
