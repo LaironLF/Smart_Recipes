@@ -5,6 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/orange_day</item>
         <item name="colorSecondary">@color/yellow_day</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/yellow_day</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
         <item name="colorPrimaryVariant">@color/orange_day_variant</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryDark">?attr/backgroundColor</item>
