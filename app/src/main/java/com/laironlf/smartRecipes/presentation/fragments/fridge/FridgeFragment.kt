@@ -11,9 +11,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.laironlf.smartRecipes.databinding.FragmentFridgeBinding
 import com.laironlf.smartRecipes.domain.models.Product
-import com.laironlf.smartRecipes.presentation.adapters.ProductListAdapter
+import com.laironlf.smartRecipes.presentation.adapters.recyclerAdapters.ProductListAdapter
 import com.laironlf.smartRecipes.presentation.fragments.fridge.FridgeViewModel.State
-import com.laironlf.smartRecipes.presentation.utils.bindTwoWay
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

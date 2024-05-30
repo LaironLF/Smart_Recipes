@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.Product
+import com.laironlf.smartRecipes.domain.models.params.GetProductListParams.FetchType
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 import com.laironlf.smartRecipes.domain.usecases.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,9 +45,12 @@ class FridgeViewModel @Inject constructor(
 
 
     private suspend fun fetchProducts() = try {
-        val getProductListParams = GetProductListParams(
-            fetchUserProducts = selectedTabPos == USER_PRODUCTS
-        )
+        val fetchType = if (selectedTabPos == USER_PRODUCTS)
+                FetchType.UserProducts
+            else
+                FetchType.AllRemoteProductsExceptUserProducts
+
+        val getProductListParams = GetProductListParams(fetchType = fetchType)
         _state.postValue(State.Loading)
         getProductsUseCase(getProductListParams).apply {
             _state.postValue(State.Loaded(this))

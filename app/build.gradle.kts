@@ -66,6 +66,8 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+    implementation("io.github.ShawnLin013:number-picker:2.4.13")
 
     //for api
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

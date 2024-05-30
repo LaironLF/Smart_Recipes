@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.laironlf.smartRecipes.R
 import com.laironlf.smartRecipes.databinding.FragmentHomeBinding
 import com.laironlf.smartRecipes.domain.models.Recipe
-import com.laironlf.smartRecipes.presentation.adapters.RecipeMiniListAdapter
+import com.laironlf.smartRecipes.presentation.adapters.recyclerAdapters.RecipeMiniListAdapter
 import com.laironlf.smartRecipes.presentation.fragments.home.HomeViewModel.State
 import com.laironlf.smartRecipes.presentation.fragments.recipedetailinfo.RecipeDetailInfoFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +43,16 @@ class HomeFragment : Fragment() {
         binding.baseCategories.btnBaking.setOnClickListener{ Log.d("TAG", "onViewCreated: BAKERY")}
         subscribeToViewModel()
         setupRecyclerViews()
+        setupServiceFunctions()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setupServiceFunctions() {
+        binding.cvAddRecipe.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_homeFragment_to_addRecipeFragment
+            )
+        }
     }
 
     private fun setupRecyclerViews() {

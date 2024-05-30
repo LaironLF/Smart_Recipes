@@ -1,49 +1,47 @@
 package com.laironlf.smartRecipes.data.implementation
 
-import android.content.Context
 import com.laironlf.smartRecipes.data.api.RecipesApiService
-import com.laironlf.smartRecipes.data.mapper.mapToDB
+import com.laironlf.smartRecipes.data.cache.AppCaching
+import com.laironlf.smartRecipes.data.mapper.mapToDTO
 import com.laironlf.smartRecipes.data.mapper.mapToIngredient
-import com.laironlf.smartRecipes.data.mapper.mapToRecipe
-import com.laironlf.smartRecipes.data.room.AppRecipesDatabase
-import com.laironlf.smartRecipes.data.room.entity.UserRecipeDB
+import com.laironlf.smartRecipes.data.mapper.mapToRecipeStep
 import com.laironlf.smartRecipes.domain.models.params.GetRecipesListParams
 import com.laironlf.smartRecipes.domain.models.params.GetRecipesListParams.FetchType
 import com.laironlf.smartRecipes.domain.models.Ingredient
 import com.laironlf.smartRecipes.domain.models.Recipe
 import com.laironlf.smartRecipes.domain.models.RecipeStep
 import com.laironlf.smartRecipes.domain.models.params.AddNewRecipeParams
-import com.laironlf.smartRecipes.domain.models.params.SaveRecipeParams
+import com.laironlf.smartRecipes.domain.models.params.LikeRecipeParams
 import com.laironlf.smartRecipes.domain.repository.RecipeRepository
 
 class RecipeRepositoryImpl(
     private val api: RecipesApiService,
-    context: Context
+    private val appCache: AppCaching
 ) : RecipeRepository {
-    private val roomDBDao = AppRecipesDatabase.getDataBase(context).getRoomDBDao()
+
 
     override suspend fun getRecipesList(params: GetRecipesListParams?): List<Recipe> =
         when (params?.fetchType){
-            FetchType.All -> api.getRecipes(null).map { it.mapToRecipe() }
+            FetchType.All -> api.getRecipes(null).map { it.mapToRecipeStep() }
             FetchType.Saved -> getSavedRecipesList()
             FetchType.Now -> getFilteredRecipesList(params!!.productsId!!)
-            else -> api.getRecipes(null).map { it.mapToRecipe() }
+            else -> api.getRecipes(null).map { it.mapToRecipeStep() }
         }
 
 
     private suspend fun getSavedRecipesList(): List<Recipe> =
-        roomDBDao.getRecipes().map { it.mapToRecipe() }
+        appCache.getUserRecipeListFromCache().map { it.mapToRecipeStep() }
 
     private suspend fun getFilteredRecipesList(productIds: List<Int>): List<Recipe> =
         if(productIds.isNotEmpty()){
-            api.getRecipes(productIds).map { it.mapToRecipe() }
+            api.getRecipes(productIds).map { it.mapToRecipeStep() }
         }  else {
             emptyList()
         }
 
     override suspend fun getRecipeSteps(id: Int): List<RecipeStep> {
         return api.getRecipeSteps(id).map {
-            it.mapToRecipe()
+            it.mapToRecipeStep()
         }
     }
 
@@ -54,19 +52,27 @@ class RecipeRepositoryImpl(
     }
 
     override suspend fun getRecipeById(id: Int): Recipe {
-        return api.getRecipe(id).mapToRecipe()
+        return api.getRecipe(id).mapToRecipeStep()
     }
 
-    override suspend fun saveRecipe(params: SaveRecipeParams) {
-        val id = params.recipe.id
-        roomDBDao.addRecipe(params.recipe.mapToDB())
-        roomDBDao.addRecipeIngredients(params.recipe.ingredients.map { it.mapToDB(id) })
-        roomDBDao.addRecipeSteps(params.recipeSteps.map { it.mapToDB(id) })
-        if (params.saveToUserRecipes) roomDBDao.addRecipeToUserList(UserRecipeDB(0, id))
+    override suspend fun saveRecipeIntoStorage(params: LikeRecipeParams) {
+        val recipe = params.recipe.mapToDTO()
+        recipe.recipeStepDTO = params.recipeSteps.map { it.mapToDTO() }
+        appCache.saveUserRecipeToCache(params.recipe.mapToDTO())
+    }
+
+    override suspend fun removeRecipeFromStorage(params: LikeRecipeParams) {
+        val recipe = params.recipe.mapToDTO()
+        recipe.recipeStepDTO = params.recipeSteps.map { it.mapToDTO() }
+        appCache.deleteUserRecipeFromCache(params.recipe.mapToDTO())
+    }
+
+    override suspend fun getRecipeFromStorage(idRecipe: Int) {
+        TODO("Not yet implemented")
     }
 
     override suspend fun addNewRecipe(params: AddNewRecipeParams) {
-        TODO("Not yet implemented")
+        api.uploadRecipe(params.recipe.mapToDTO())
     }
 
 }

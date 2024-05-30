@@ -25,9 +25,9 @@ class AppCaching(
             writeToCache(PRODUCTS_CACHE_NAME, json.encodeToString(it))
         }
 
-        userRecipeList.setList(readRecipeArray(SAVED_RECIPE_CACHE_NAME))
+        userRecipeList.setList(readRecipeArray(USER_RECIPE_CACHE_NAME))
         userRecipeList.setListener {
-            writeToCache(SAVED_RECIPE_CACHE_NAME, json.encodeToString(it))
+            writeToCache(USER_RECIPE_CACHE_NAME, json.encodeToString(it))
         }
     }
 
@@ -47,6 +47,7 @@ class AppCaching(
 
 
 
+
     fun saveUserProductToCache(product: ProductDTO) {
         userProductsList.add(product)
     }
@@ -59,6 +60,11 @@ class AppCaching(
     fun addProductList(products: List<ProductDTO>) {
         products.forEach { productsList.add(it) }
     }
+
+    fun saveUserRecipeToCache(recipe: RecipeDTO) = userRecipeList.add(recipe)
+    fun deleteUserRecipeFromCache(recipe: RecipeDTO) = userRecipeList.remove(recipe)
+    fun getUserRecipeListFromCache(): List<RecipeDTO> = readRecipeArray(USER_RECIPE_CACHE_NAME)
+
 
 
     private fun writeToCache(fileName: String, data: String) {
@@ -76,8 +82,7 @@ class AppCaching(
         }
     }
 
-
-    class ObservableList<T> {
+    private class ObservableList<T> {
         private var _list = ArrayList<T>()
         private var onChanged: (List<T>) -> Unit = {}
 
@@ -109,7 +114,7 @@ class AppCaching(
 
     companion object {
         private val json = Json { prettyPrint = true }
-        private const val SAVED_RECIPE_CACHE_NAME = "saved_user_recipes"
+        private const val USER_RECIPE_CACHE_NAME = "saved_user_recipes"
         private const val USER_PRODUCTS_CACHE_NAME = "saved_user_products"
         private const val PRODUCTS_CACHE_NAME = "saved_products"
     }

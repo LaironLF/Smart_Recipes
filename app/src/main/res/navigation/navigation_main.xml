@@ -8,7 +8,11 @@
         android:id="@+id/homeFragment"
         android:name="com.laironlf.smartRecipes.presentation.fragments.home.HomeFragment"
         android:label="Главная"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipesFragment"
         android:name="com.laironlf.smartRecipes.presentation.fragments.recipes.RecipesFragment"
@@ -38,4 +42,9 @@
         android:name="com.laironlf.smartRecipes.presentation.fragments.recipedetailinfo.RecipeDetailInfoFragment"
         android:label="Обзор рецепта"
         tools:layout="@layout/fragment_recipe_detail_info" />
+    <fragment
+        android:id="@+id/addRecipeFragment"
+        android:name="com.laironlf.smartRecipes.presentation.fragments.addRecipe.AddRecipeFragment"
+        android:label="Добавление рецепта"
+        tools:layout="@layout/fragment_add_recipe" />
 </navigation>

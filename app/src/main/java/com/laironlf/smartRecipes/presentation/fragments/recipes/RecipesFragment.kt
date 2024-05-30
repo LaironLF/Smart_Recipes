@@ -1,8 +1,6 @@
 package com.laironlf.smartRecipes.presentation.fragments.recipes
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.laironlf.smartRecipes.R
 import com.laironlf.smartRecipes.databinding.FragmentRecipesBinding
 import com.laironlf.smartRecipes.domain.models.Recipe
-import com.laironlf.smartRecipes.presentation.adapters.RecipeListAdapter
+import com.laironlf.smartRecipes.presentation.adapters.recyclerAdapters.RecipeListAdapter
 import com.laironlf.smartRecipes.presentation.fragments.recipedetailinfo.RecipeDetailInfoFragment
 import com.laironlf.smartRecipes.presentation.fragments.recipes.RecipesViewModel.State
 import com.laironlf.smartRecipes.presentation.utils.bindTwoWay
@@ -28,7 +24,7 @@ class RecipesFragment : Fragment() {
 
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
-    private var adapter = RecipeListAdapter(::onItemRecipeClick)
+    private var adapter = RecipeListAdapter(::onItemRecipeClick, ::onRecipeLikeClick)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,11 +55,15 @@ class RecipesFragment : Fragment() {
     }
 
     private fun onItemRecipeClick(recipe: Recipe){
-        Log.d(TAG, "onItemRecipeClick: ${recipe.title} clicked")
+//        Log.d(TAG, "onItemRecipeClick: ${recipe.title} clicked")
         findNavController().navigate(
             R.id.action_recipesFragment_to_recipeDetailInfoFragment,
             RecipeDetailInfoFragment.createArguments(recipe.id, recipe.title)
         )
+    }
+
+    private fun onRecipeLikeClick(recipe: Recipe){
+        viewModel.onRecipeLikeClicked(recipe)
     }
 
     override fun onDestroy() {

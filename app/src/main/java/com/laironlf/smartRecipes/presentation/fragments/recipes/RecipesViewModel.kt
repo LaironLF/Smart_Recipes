@@ -9,8 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.laironlf.smartRecipes.domain.models.params.GetRecipesListParams
 import com.laironlf.smartRecipes.domain.models.params.GetRecipesListParams.FetchType
 import com.laironlf.smartRecipes.domain.models.Recipe
+import com.laironlf.smartRecipes.domain.models.params.LikeRecipeParams
 import com.laironlf.smartRecipes.domain.usecases.GetRecipeListUseCase
-import com.laironlf.smartRecipes.domain.usecases.SaveRecipeUseCase
+import com.laironlf.smartRecipes.domain.usecases.StorageRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
     private val getRecipeListUseCase: GetRecipeListUseCase,
-    private val saveRecipeUseCase: SaveRecipeUseCase
+    private val recipeLikeUseCase: StorageRecipeUseCase
 )  : ViewModel() {
 
     private val _state: MutableLiveData<State> = MutableLiveData(State.Loading)
@@ -33,6 +34,10 @@ class RecipesViewModel @Inject constructor(
 
     fun onTabClicked(){
         viewModelScope.launch { fetchRecipes() }
+    }
+
+    fun onRecipeLikeClicked(recipe: Recipe){
+        viewModelScope.launch { recipeLikeUseCase(LikeRecipeParams(recipe)) }
     }
 
     private suspend fun fetchRecipes() = try {
@@ -63,8 +68,4 @@ class RecipesViewModel @Inject constructor(
         data object Empty : State
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.d(TAG, "onCleared: ViewModel DESTROYERD AUAKASGAS")
-    }
 }

@@ -1,39 +1,31 @@
 package com.laironlf.smartRecipes.data.implementation
 
-import android.content.Context
 import com.laironlf.smartRecipes.data.api.RecipesApiService
 import com.laironlf.smartRecipes.data.cache.AppCaching
-import com.laironlf.smartRecipes.data.mapper.mapToDB
 import com.laironlf.smartRecipes.data.mapper.mapToDTO
+import com.laironlf.smartRecipes.data.mapper.mapToDomain
 import com.laironlf.smartRecipes.data.mapper.mapToProduct
-import com.laironlf.smartRecipes.data.mapper.mapToRecipe
-import com.laironlf.smartRecipes.data.room.AppRecipesDatabase
-import com.laironlf.smartRecipes.data.room.entity.UserProductDB
-import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
+import com.laironlf.smartRecipes.domain.models.MeasureType
 import com.laironlf.smartRecipes.domain.models.Product
+import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
+import com.laironlf.smartRecipes.domain.models.post.ProductPost
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 
 class ProductRepositoryImpl(
     private val api: RecipesApiService,
-    private val context: Context
+    private val appCache: AppCaching
 ): ProductRepository {
-    private val roomDBDao = AppRecipesDatabase.getDataBase(context).getRoomDBDao()
-    private val appCache = AppCaching(context);
 
 
-    override suspend fun getProductList(params: GetProductListParams?): List<Product> {
-
-        val productList = if (params?.fetchUserProducts == true){
-//            roomDBDao.getUserProducts().map { it.mapToProduct() }
-            appCache.getUserProductList().map { it.mapToProduct() }
-
-        } else {
-            getAllProductList(params)
-        }
-        return productList
+    override suspend fun getProductList(): List<Product> {
+        return getAllProductList()
     }
 
-    private suspend fun getAllProductList(params: GetProductListParams?): List<Product>{
+    override suspend fun getUserProductList(): List<Product> {
+        return appCache.getUserProductList().map { it.mapToProduct() }
+    }
+
+    private suspend fun getAllProductList(): List<Product>{
         var productList: List<Product>
         try {
             productList = api.getProducts().map { it.mapToProduct() }
@@ -58,5 +50,14 @@ class ProductRepositoryImpl(
 //        roomDBDao.deleteProductFromUserList(product.id)
         appCache.deleteUserProductFromCache(product.mapToDTO())
         return true
+    }
+
+    override suspend fun uploadNewProduct(product: ProductPost) {
+        val list = listOf(product)
+        api.uploadProduct(list.map { it.mapToDTO() })
+    }
+
+    override suspend fun getMeasureTypes(): List<MeasureType> {
+        return api.getMeasureTypes().map { it.mapToDomain() }
     }
 }

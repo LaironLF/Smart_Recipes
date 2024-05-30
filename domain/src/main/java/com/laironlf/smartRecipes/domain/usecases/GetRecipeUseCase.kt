@@ -2,6 +2,7 @@ package com.laironlf.smartRecipes.domain.usecases
 
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.Recipe
+import com.laironlf.smartRecipes.domain.models.params.GetProductListParams.FetchType
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 import com.laironlf.smartRecipes.domain.repository.RecipeRepository
 
@@ -10,8 +11,8 @@ class GetRecipeUseCase (
     private val productRepository: ProductRepository
 ){
     suspend operator fun invoke(id: Int): Recipe{
-        val recipe = recipeRepository.getRecipeById(id)!!
-        val products = productRepository.getProductList(GetProductListParams(fetchUserProducts = true))
+        val recipe = recipeRepository.getRecipeById(id)
+        val products = productRepository.getUserProductList()
         recipe.matchesProducts = products.filter { product ->
             recipe.ingredients.any { ingredient ->
                 ingredient.product.id == product.id

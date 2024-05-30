@@ -20,10 +20,37 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-
+        <item name="bottomSheetDialogTheme">@style/Theme.NoWiredStrapInNavigationBar</item>
+        <item name="bottomSheetBackgroundColor">@color/white</item>
+        <item name="bottomSheetColorPrimary"  >@color/orange_day</item>
+        <item name="bottomSheetColorOnPrimary">@color/white</item>
+        <item name="bottomSheetColorSecondary">@color/yellow_day</item>
+        <item name="appTextColor">@color/black</item>
     </style>
     <style name="Theme.SmartRecipes" parent="Base.Theme.SmartRecipes" />
 
+    <attr name="bottomSheetBackgroundColor" format="color"/>
+    <attr name="bottomSheetColorPrimary" format="color"/>
+    <attr name="bottomSheetColorOnPrimary" format="color"/>
+    <attr name="bottomSheetColorSecondary" format="color"/>
+    <attr name="appTextColor" format="color"/>
+
+
+    <style name="Widget.YourApp.BottomSheet" parent="Widget.MaterialComponents.BottomSheet"/>
+
+    <style name="Theme.NoWiredStrapInNavigationBar" parent="@style/Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="colorPrimary"  >?attr/bottomSheetColorPrimary</item>
+        <item name="colorOnPrimary">?attr/bottomSheetColorOnPrimary</item>
+        <item name="colorSecondary">?attr/bottomSheetColorSecondary</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:navigationBarColor">?attr/bottomSheetBackgroundColor</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="bottomSheetStyle">@style/TransparentBottomSheetStyle</item>
+    </style>
+
+    <style name="TransparentBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bsd_background</item>
+    </style>
 
     <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/orange_day</item>

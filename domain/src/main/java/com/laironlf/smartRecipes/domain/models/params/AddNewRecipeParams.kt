@@ -1,5 +1,7 @@
 package com.laironlf.smartRecipes.domain.models.params
 
-class AddNewRecipeParams {
+import com.laironlf.smartRecipes.domain.models.post.RecipePost
 
-}
+data class AddNewRecipeParams(
+    val recipe: RecipePost
+)

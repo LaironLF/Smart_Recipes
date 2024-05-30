@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.laironlf.smartRecipes.databinding.FragmentRecipeDetailInfoBinding
 import com.laironlf.smartRecipes.domain.models.Recipe
-import com.laironlf.smartRecipes.presentation.adapters.IngredientsAdapter
-import com.laironlf.smartRecipes.presentation.adapters.RecipeStepAdapter
+import com.laironlf.smartRecipes.presentation.adapters.recyclerAdapters.IngredientsAdapter
+import com.laironlf.smartRecipes.presentation.adapters.lllists.RecipeStepAdapter
 import com.laironlf.smartRecipes.presentation.fragments.recipedetailinfo.RecipeDetailInfoViewModel.RecipeStepState
 import com.laironlf.smartRecipes.presentation.fragments.recipedetailinfo.RecipeDetailInfoViewModel.State
 import com.squareup.picasso.Picasso

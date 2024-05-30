@@ -13,7 +13,7 @@ class GetRecipeListUseCase(
 
 ) {
     suspend operator fun invoke(getRecipesListParams: GetRecipesListParams): List<Recipe>{
-        val userProducts = productRepository.getProductList(GetProductListParams(fetchUserProducts = true))
+        val userProducts = productRepository.getUserProductList()
         if (getRecipesListParams.fetchType is FetchType.Now && getRecipesListParams.productsId == null)
             getRecipesListParams.productsId = userProducts.map { it.id }
 
@@ -24,6 +24,11 @@ class GetRecipeListUseCase(
                     ingredient.product.id == product.id
                 }
             }
+        }
+        val userRecipes = recipeRepository.getRecipesList(GetRecipesListParams(FetchType.Saved))
+        recipes.forEach{ recipe ->
+            if(userRecipes.any { userRecipe ->  userRecipe.id == recipe.id })
+                recipe.liked = true
         }
         return recipes
     }

@@ -5,7 +5,7 @@ import com.laironlf.smartRecipes.domain.models.params.GetRecipesListParams
 import com.laironlf.smartRecipes.domain.models.Ingredient
 import com.laironlf.smartRecipes.domain.models.Recipe
 import com.laironlf.smartRecipes.domain.models.RecipeStep
-import com.laironlf.smartRecipes.domain.models.params.SaveRecipeParams
+import com.laironlf.smartRecipes.domain.models.params.LikeRecipeParams
 
 interface RecipeRepository {
     suspend fun getRecipesList(params: GetRecipesListParams?): List<Recipe>
@@ -17,7 +17,10 @@ interface RecipeRepository {
     /**
      * Сохранение рецепта в "Избранное" пользователя
      */
-    suspend fun saveRecipe(params: SaveRecipeParams)
+    suspend fun saveRecipeIntoStorage(params: LikeRecipeParams)
+    suspend fun removeRecipeFromStorage(params: LikeRecipeParams)
+
+    suspend fun getRecipeFromStorage(idRecipe: Int)
 
     /**
      * Добавление нового рецепта на сервер

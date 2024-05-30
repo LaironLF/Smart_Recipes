@@ -5,4 +5,5 @@
     <string name="title_top_rating">Топ рейтинга</string>
     <string name="nav_open">open</string>
     <string name="nav_close">close</string>
+    <string name="number_picker_formatter">%02d</string>
 </resources>
