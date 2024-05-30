@@ -10,7 +10,7 @@ import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.Product
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams.FetchType
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
-import com.laironlf.smartRecipes.domain.usecases.GetProductsUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

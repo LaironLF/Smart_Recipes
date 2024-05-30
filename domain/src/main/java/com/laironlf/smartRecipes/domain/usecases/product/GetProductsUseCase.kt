@@ -1,4 +1,4 @@
-package com.laironlf.smartRecipes.domain.usecases
+package com.laironlf.smartRecipes.domain.usecases.product
 
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.Product

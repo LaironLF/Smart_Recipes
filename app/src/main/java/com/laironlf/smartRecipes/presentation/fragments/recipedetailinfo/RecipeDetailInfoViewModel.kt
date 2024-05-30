@@ -4,19 +4,14 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.laironlf.smartRecipes.domain.models.Ingredient
 import com.laironlf.smartRecipes.domain.models.Recipe
-import com.laironlf.smartRecipes.domain.models.RecipeDetailInfo
 import com.laironlf.smartRecipes.domain.models.RecipeStep
-import com.laironlf.smartRecipes.domain.repository.RecipeRepository
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeIngredientsUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeStepsUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeIngredientsUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeStepsUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

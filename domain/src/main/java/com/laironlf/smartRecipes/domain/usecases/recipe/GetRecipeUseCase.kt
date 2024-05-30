@@ -1,8 +1,6 @@
-package com.laironlf.smartRecipes.domain.usecases
+package com.laironlf.smartRecipes.domain.usecases.recipe
 
-import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.Recipe
-import com.laironlf.smartRecipes.domain.models.params.GetProductListParams.FetchType
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 import com.laironlf.smartRecipes.domain.repository.RecipeRepository
 

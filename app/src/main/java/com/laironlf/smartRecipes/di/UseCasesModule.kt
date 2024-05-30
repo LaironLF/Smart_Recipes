@@ -3,16 +3,16 @@ package com.laironlf.smartRecipes.di
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 import com.laironlf.smartRecipes.domain.repository.RecipeRepository
 import com.laironlf.smartRecipes.domain.repository.TechnicalRepository
-import com.laironlf.smartRecipes.domain.usecases.AddRecipeUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetMeasureTypesUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetProductsUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeIngredientsUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeListUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeStepsUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeUseCase
-import com.laironlf.smartRecipes.domain.usecases.StorageRecipeUseCase
-import com.laironlf.smartRecipes.domain.usecases.UploadImageUseCase
-import com.laironlf.smartRecipes.domain.usecases.UploadNewProductUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.AddRecipeUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.GetMeasureTypesUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeIngredientsUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeListUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeStepsUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.StorageRecipeUseCase
+import com.laironlf.smartRecipes.domain.usecases.technical.UploadImageUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.UploadNewProductUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +28,7 @@ class UseCasesModule {
     fun provideGetRecipeListUseCase(
         recipeRepository: RecipeRepository,
         productRepository: ProductRepository
-    ): GetRecipeListUseCase{
+    ): GetRecipeListUseCase {
         return GetRecipeListUseCase(recipeRepository, productRepository)
     }
 
@@ -36,7 +36,7 @@ class UseCasesModule {
     @Singleton
     fun provideGetRecipeIngredientsUseCase(
         recipeRepository: RecipeRepository
-    ): GetRecipeIngredientsUseCase{
+    ): GetRecipeIngredientsUseCase {
         return GetRecipeIngredientsUseCase(recipeRepository)
     }
 
@@ -53,7 +53,7 @@ class UseCasesModule {
     fun provideGetRecipeUseCase(
         recipeRepository: RecipeRepository,
         productRepository: ProductRepository
-    ): GetRecipeUseCase{
+    ): GetRecipeUseCase {
         return GetRecipeUseCase(recipeRepository, productRepository)
     }
 
@@ -61,7 +61,7 @@ class UseCasesModule {
     @Singleton
     fun provideGetProductsUseCase(
         productRepository: ProductRepository
-    ) : GetProductsUseCase{
+    ) : GetProductsUseCase {
         return GetProductsUseCase(productRepository)
     }
 
@@ -69,7 +69,7 @@ class UseCasesModule {
     @Singleton
     fun provideSaveRecipeUseCase(
         recipeRepository: RecipeRepository
-    ) : StorageRecipeUseCase{
+    ) : StorageRecipeUseCase {
         return StorageRecipeUseCase(recipeRepository)
     }
 
@@ -77,7 +77,7 @@ class UseCasesModule {
     @Singleton
     fun provideAddRecipeUseCase(
         recipeRepository: RecipeRepository
-    ) : AddRecipeUseCase{
+    ) : AddRecipeUseCase {
         return AddRecipeUseCase(recipeRepository)
     }
 
@@ -93,7 +93,7 @@ class UseCasesModule {
     @Singleton
     fun provideUploadFileUseCase(
         technicalRepository: TechnicalRepository
-    ) : UploadImageUseCase{
+    ) : UploadImageUseCase {
         return UploadImageUseCase(technicalRepository)
     }
 
@@ -101,7 +101,7 @@ class UseCasesModule {
     @Singleton
     fun provideUploadProductUseCase(
         productRepository: ProductRepository
-    ): UploadNewProductUseCase{
+    ): UploadNewProductUseCase {
         return UploadNewProductUseCase(productRepository)
     }
 }

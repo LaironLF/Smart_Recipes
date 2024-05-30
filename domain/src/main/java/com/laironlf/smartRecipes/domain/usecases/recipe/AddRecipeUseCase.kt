@@ -1,4 +1,4 @@
-package com.laironlf.smartRecipes.domain.usecases
+package com.laironlf.smartRecipes.domain.usecases.recipe
 
 import com.laironlf.smartRecipes.domain.models.Recipe
 import com.laironlf.smartRecipes.domain.models.params.AddNewRecipeParams

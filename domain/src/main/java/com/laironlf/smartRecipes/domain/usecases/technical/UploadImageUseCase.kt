@@ -1,4 +1,4 @@
-package com.laironlf.smartRecipes.domain.usecases
+package com.laironlf.smartRecipes.domain.usecases.technical
 
 import com.laironlf.smartRecipes.domain.repository.TechnicalRepository
 import java.io.File

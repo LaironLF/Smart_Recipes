@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.laironlf.smartRecipes.domain.models.post.IngredientPost
 import com.laironlf.smartRecipes.domain.models.post.RecipePost
 import com.laironlf.smartRecipes.domain.models.post.StepPost
-import com.laironlf.smartRecipes.domain.usecases.AddRecipeUseCase
-import com.laironlf.smartRecipes.domain.usecases.UploadImageUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.AddRecipeUseCase
+import com.laironlf.smartRecipes.domain.usecases.technical.UploadImageUseCase
 import com.laironlf.smartRecipes.presentation.dialogs.bottomSheetIngredients.SheetDialogIngredients.Companion.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

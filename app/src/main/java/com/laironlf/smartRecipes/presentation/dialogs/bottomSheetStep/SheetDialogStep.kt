@@ -14,13 +14,9 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.laironlf.smartRecipes.databinding.SheetDialogStepBinding
 import com.laironlf.smartRecipes.domain.models.post.StepPost
-import com.laironlf.smartRecipes.domain.usecases.UploadImageUseCase
+import com.laironlf.smartRecipes.domain.usecases.technical.UploadImageUseCase
 import com.laironlf.smartRecipes.presentation.utils.PermissionUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint

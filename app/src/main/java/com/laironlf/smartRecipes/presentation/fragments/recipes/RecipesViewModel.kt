@@ -10,8 +10,8 @@ import com.laironlf.smartRecipes.domain.models.params.GetRecipesListParams
 import com.laironlf.smartRecipes.domain.models.params.GetRecipesListParams.FetchType
 import com.laironlf.smartRecipes.domain.models.Recipe
 import com.laironlf.smartRecipes.domain.models.params.LikeRecipeParams
-import com.laironlf.smartRecipes.domain.usecases.GetRecipeListUseCase
-import com.laironlf.smartRecipes.domain.usecases.StorageRecipeUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeListUseCase
+import com.laironlf.smartRecipes.domain.usecases.recipe.StorageRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

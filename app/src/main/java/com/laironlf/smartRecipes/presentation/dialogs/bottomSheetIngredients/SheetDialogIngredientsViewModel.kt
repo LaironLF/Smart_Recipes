@@ -2,7 +2,6 @@ package com.laironlf.smartRecipes.presentation.dialogs.bottomSheetIngredients
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,9 +9,9 @@ import com.laironlf.smartRecipes.domain.models.MeasureType
 import com.laironlf.smartRecipes.domain.models.Product
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.post.ProductPost
-import com.laironlf.smartRecipes.domain.usecases.GetMeasureTypesUseCase
-import com.laironlf.smartRecipes.domain.usecases.GetProductsUseCase
-import com.laironlf.smartRecipes.domain.usecases.UploadNewProductUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.GetMeasureTypesUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.UploadNewProductUseCase
 import com.laironlf.smartRecipes.presentation.dialogs.bottomSheetIngredients.SheetDialogIngredients.Companion.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
