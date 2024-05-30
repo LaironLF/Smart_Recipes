@@ -24,37 +24,18 @@ class FridgeViewModel @Inject constructor(
     private val _state: MutableLiveData<State> = MutableLiveData(State.Loading)
     val state: LiveData<State> = _state
 
-    private var selectedTabPos: Int = 0
-
     init {
         viewModelScope.launch { fetchProducts() }
     }
 
-    fun onTabSelected(pos: Int){
-        if (pos == 0) {
-            selectedTabPos = pos
-            viewModelScope.launch { fetchProducts() }
-        }
-        if (pos == 1) {
-            selectedTabPos = pos
-            viewModelScope.launch { fetchProducts() }
-        }
-
-    }
-
-
-
     private suspend fun fetchProducts() = try {
-        val fetchType = if (selectedTabPos == USER_PRODUCTS)
-                FetchType.UserProducts
-            else
-                FetchType.AllRemoteProductsExceptUserProducts
-
-        val getProductListParams = GetProductListParams(fetchType = fetchType)
-        _state.postValue(State.Loading)
-        getProductsUseCase(getProductListParams).apply {
-            _state.postValue(State.Loaded(this))
-        }
+//        val fetchType = FetchType.AllRemoteProductsExceptUserProducts
+//
+//        val getProductListParams = GetProductListParams(fetchType = fetchType)
+//        _state.postValue(State.Loading)
+//        getProductsUseCase(getProductListParams).apply {
+//            _state.postValue(State.Loaded(this))
+//        }
 
     } catch (e: Exception) {
         _state.postValue(State.Error)
@@ -74,8 +55,8 @@ class FridgeViewModel @Inject constructor(
     }
 
     fun onProductClick(product: Product, position: Int) {
-        if (selectedTabPos == 1) viewModelScope.launch { addUserProduct(product) }
-        if (selectedTabPos == 0) viewModelScope.launch { deleteUserProduct(product) }
+//        if (selectedTabPos == 1) viewModelScope.launch { addUserProduct(product) }
+//        if (selectedTabPos == 0) viewModelScope.launch { deleteUserProduct(product) }
     }
 
     sealed interface State {
@@ -85,11 +66,6 @@ class FridgeViewModel @Inject constructor(
         data class Loaded(
             val products: List<Product>
         ) : State
-    }
-
-    companion object {
-        private val USER_PRODUCTS = 0
-        private val ALL_PRODUCTS = 1
     }
 
 }
