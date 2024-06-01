@@ -8,15 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.laironlf.smartRecipes.domain.models.Product
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
-import com.laironlf.smartRecipes.domain.usecases.product.UploadNewProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BottomSheetProductViewModel @Inject constructor(
-    private val uploadNewProductUseCase: UploadNewProductUseCase,
     private val getProductsUseCase: GetProductsUseCase
 ): ViewModel() {
 
@@ -32,11 +29,6 @@ class BottomSheetProductViewModel @Inject constructor(
         }
     }
 
-    private fun onQueryChanged(query: String) = viewModelScope.launch {
-        _state.postValue(State.Idle)
-        if (query.isNotEmpty()) fetchProducts(query)
-    }
-
     private suspend fun fetchProducts(query: String?) = try {
         _state.postValue(State.Loading)
         val params = GetProductListParams(
@@ -50,18 +42,10 @@ class BottomSheetProductViewModel @Inject constructor(
         e.printStackTrace()
     }
 
-    fun onAddNewProductOfferClicked() {
-        _state.postValue(State.AddProduct)
-        newProductTitle.postValue(query.value)
-    }
-
-
     sealed interface State {
         data object Idle: State
         data object Loading: State
         data class Loaded(val products: List<Product>): State
         data object Empty: State
-        data object AddProduct: State
-
     }
 }

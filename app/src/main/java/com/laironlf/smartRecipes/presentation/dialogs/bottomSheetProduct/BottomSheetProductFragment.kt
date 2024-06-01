@@ -1,13 +1,9 @@
 package com.laironlf.smartRecipes.presentation.dialogs.bottomSheetProduct
 
-import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -47,7 +43,6 @@ class BottomSheetProductFragment(
         setupRecyclerViews()
         subscribeToViewModel()
         binding.searchProducts.requestFocus()
-        binding.tvAddNewProductOfferAction.setOnClickListener { viewModel.onAddNewProductOfferClicked() }
     }
 
     private fun setupRecyclerViews() {
@@ -60,22 +55,10 @@ class BottomSheetProductFragment(
         binding.vAddProduct.tietProductTitle.bindTwoWay(viewModel.newProductTitle, viewLifecycleOwner)
 
         viewModel.state.observe(viewLifecycleOwner) { state ->
-//            binding.searchProducts.visibility = if(state is State.AddProduct) View.GONE else View.VISIBLE
             binding.progressBar.visibility = if (state is State.Loading) View.VISIBLE else View.GONE
             binding.recviewProducts.visibility = if(state is State.Empty) View.GONE else View.VISIBLE
             binding.tvDoesntExist.visibility = if (state is State.Empty) View.VISIBLE else View.GONE
             productsAdapter.productList = if (state is State.Loaded) state.products else emptyList()
-//            binding.vAddProduct.root.visibility = if(state is State.AddProduct) View.VISIBLE else View.GONE
-//            if (state is State.AddProduct){
-//                val productTitleView =  binding.vAddProduct.tietProductTitle
-//                productTitleView.requestFocus()
-//                Handler(Looper.getMainLooper()).postDelayed({
-//                    productTitleView.setSelection(productTitleView.text?.length ?: 0)
-//                    val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-//                    imm?.showSoftInput(productTitleView, InputMethodManager.SHOW_IMPLICIT)
-//                }, 100)
-//
-//            }
         }
     }
 
