@@ -3,6 +3,7 @@ package com.laironlf.smartRecipes.di
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 import com.laironlf.smartRecipes.domain.repository.RecipeRepository
 import com.laironlf.smartRecipes.domain.repository.TechnicalRepository
+import com.laironlf.smartRecipes.domain.usecases.product.AddProductUserUseCase
 import com.laironlf.smartRecipes.domain.usecases.recipe.AddRecipeUseCase
 import com.laironlf.smartRecipes.domain.usecases.product.GetMeasureTypesUseCase
 import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
@@ -103,5 +104,13 @@ class UseCasesModule {
         productRepository: ProductRepository
     ): UploadNewProductUseCase {
         return UploadNewProductUseCase(productRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddProductUserUseCase(
+        productRepository: ProductRepository
+    ): AddProductUserUseCase{
+        return AddProductUserUseCase(productRepository)
     }
 }

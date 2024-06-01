@@ -10,22 +10,42 @@ import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.Product
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams.FetchType
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
+import com.laironlf.smartRecipes.domain.usecases.product.AddProductUserUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.AddProductUserUseCase.ProductAlreadyIsException
 import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FridgeViewModel @Inject constructor(
+    private val getProductsUseCase: GetProductsUseCase,
     private val productRepository: ProductRepository,
-    private val getProductsUseCase: GetProductsUseCase
+    private val addProductUserUseCase: AddProductUserUseCase
 ) : ViewModel() {
 
     private val _state: MutableLiveData<State> = MutableLiveData(State.Loading)
     val state: LiveData<State> = _state
 
+    private val _actions: Channel<Action> = Channel(Channel.BUFFERED)
+    val actions: Flow<Action> = _actions.receiveAsFlow()
+
     init {
-        viewModelScope.launch { fetchProducts() }
+        viewModelScope.launch { fetchUserProducts() }
+    }
+
+    private suspend fun fetchUserProducts() = try {
+        _state.postValue(State.Loading)
+        val params = GetProductListParams(
+            fetchType = FetchType.UserProducts
+        )
+        val list = getProductsUseCase(params)
+        _state.postValue(State.Loaded(list))
+    } catch (e: Exception){
+        e.printStackTrace()
     }
 
     private suspend fun fetchProducts() = try {
@@ -42,21 +62,24 @@ class FridgeViewModel @Inject constructor(
         Log.d(TAG, "fetchProducts: ${e.message}")
     }
 
-    private suspend fun addUserProduct(product: Product) = try {
-        productRepository.saveUserProduct(product)
-    } catch (e: Exception){
-        Log.d(TAG, "addUserProduct: ${e.message}")
-    }
-
-    private suspend fun deleteUserProduct(product: Product) = try {
-        productRepository.deleteUserProduct(product)
-    } catch (e:Exception) {
-        Log.d(TAG, "deleteUserProduct: ${e.message}")
-    }
 
     fun onProductClick(product: Product, position: Int) {
-//        if (selectedTabPos == 1) viewModelScope.launch { addUserProduct(product) }
-//        if (selectedTabPos == 0) viewModelScope.launch { deleteUserProduct(product) }
+        viewModelScope.launch { productRepository.deleteUserProduct(product) }
+    }
+
+    fun onAddProduct(product: Product) = viewModelScope.launch {
+        try {
+            addProductUserUseCase(product)
+            fetchUserProducts()
+        } catch (e: ProductAlreadyIsException){
+            viewModelScope.launch { _actions.send(Action.ShowToast("Продукт уже добавлен")) }
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
+    sealed interface Action {
+        data class ShowToast(val message: String): Action
     }
 
     sealed interface State {
