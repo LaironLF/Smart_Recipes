@@ -50,12 +50,9 @@ class RecipesViewModel @Inject constructor(
         )
         Log.d(TAG, "fetchRecipes: ${tabPos.value}")
         _state.postValue(State.Loading)
-        getRecipeListUseCase(params).apply {
-            if (this.isEmpty())
-                _state.postValue(State.Empty)
-            else
-                _state.postValue(State.Loaded(this))
-        }
+        val list = getRecipeListUseCase(params)
+        val sortedList = list.sortedBy { it.ingredients.size - it.matchesProducts.size }
+        _state.postValue(State.Loaded(sortedList))
     } catch (e: Exception){
         Log.d(TAG, "fetchRecipes: ${e.message}")
         _state.postValue(State.Error(e.message.toString()))

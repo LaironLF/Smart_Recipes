@@ -6,6 +6,7 @@ import com.laironlf.smartRecipes.domain.repository.TechnicalRepository
 import com.laironlf.smartRecipes.domain.usecases.product.AddProductUserUseCase
 import com.laironlf.smartRecipes.domain.usecases.recipe.AddRecipeUseCase
 import com.laironlf.smartRecipes.domain.usecases.product.GetMeasureTypesUseCase
+import com.laironlf.smartRecipes.domain.usecases.product.GetProductByBarcodeUseCase
 import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
 import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeIngredientsUseCase
 import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeListUseCase
@@ -14,6 +15,8 @@ import com.laironlf.smartRecipes.domain.usecases.recipe.GetRecipeUseCase
 import com.laironlf.smartRecipes.domain.usecases.recipe.StorageRecipeUseCase
 import com.laironlf.smartRecipes.domain.usecases.technical.UploadImageUseCase
 import com.laironlf.smartRecipes.domain.usecases.product.UploadNewProductUseCase
+import com.laironlf.smartRecipes.domain.usecases.technical.GetProductBarcodeDataUseCase
+import com.laironlf.smartRecipes.domain.usecases.technical.UploadNewRealProductUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -112,5 +115,28 @@ class UseCasesModule {
         productRepository: ProductRepository
     ): AddProductUserUseCase{
         return AddProductUserUseCase(productRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetProductBarcodeDataUseCase(
+        technicalRepository: TechnicalRepository
+    ): GetProductBarcodeDataUseCase{
+        return GetProductBarcodeDataUseCase(technicalRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun proviceGetProductByBarcodeUseCase(
+        productRepository: ProductRepository
+    ): GetProductByBarcodeUseCase{
+        return GetProductByBarcodeUseCase(productRepository)
+    }
+    @Provides
+    @Singleton
+    fun proviceUploadRealProductUseCase(
+        technicalRepository: TechnicalRepository
+    ): UploadNewRealProductUseCase{
+        return UploadNewRealProductUseCase(technicalRepository)
     }
 }

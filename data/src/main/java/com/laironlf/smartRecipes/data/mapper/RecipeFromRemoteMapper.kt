@@ -7,6 +7,7 @@ import com.laironlf.smartRecipes.data.dto.RecipeDTO
 import com.laironlf.smartRecipes.data.dto.RecipeStepDTO
 import com.laironlf.smartRecipes.data.dto.post.IngredientPostDTO
 import com.laironlf.smartRecipes.data.dto.post.ProductPostDTO
+import com.laironlf.smartRecipes.data.dto.post.RealProductPostDTO
 import com.laironlf.smartRecipes.data.dto.post.RecipePostDTO
 import com.laironlf.smartRecipes.data.dto.post.StepPostDTO
 import com.laironlf.smartRecipes.domain.models.Ingredient
@@ -16,6 +17,7 @@ import com.laironlf.smartRecipes.domain.models.Recipe
 import com.laironlf.smartRecipes.domain.models.RecipeStep
 import com.laironlf.smartRecipes.domain.models.post.IngredientPost
 import com.laironlf.smartRecipes.domain.models.post.ProductPost
+import com.laironlf.smartRecipes.domain.models.post.RealProductPost
 import com.laironlf.smartRecipes.domain.models.post.RecipePost
 import com.laironlf.smartRecipes.domain.models.post.StepPost
 
@@ -38,6 +40,13 @@ fun MeasureTypeDTO.mapToDomain(): MeasureType{
         title = title
     )
 }
+
+fun RealProductPost.mapToDTO(): RealProductPostDTO = RealProductPostDTO(
+    idProduct = idProduct,
+    barcode = barcode,
+    description = description,
+    title = title
+)
 
 fun StepPost.mapToDTO(): StepPostDTO = StepPostDTO(
     imageUrl = imageUrl,

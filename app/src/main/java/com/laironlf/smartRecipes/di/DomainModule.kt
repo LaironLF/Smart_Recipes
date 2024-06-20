@@ -1,11 +1,14 @@
 package com.laironlf.smartRecipes.di
 
 import android.content.Context
+import com.laironlf.smartRecipes.data.api.BarcodeApiService
+import com.laironlf.smartRecipes.data.api.GS1RusApiService
 import com.laironlf.smartRecipes.data.api.RecipesApiService
 import com.laironlf.smartRecipes.data.cache.AppCaching
 import com.laironlf.smartRecipes.data.implementation.ProductRepositoryImpl
 import com.laironlf.smartRecipes.data.implementation.RecipeRepositoryImpl
 import com.laironlf.smartRecipes.data.implementation.TechnicalRepositoryImpl
+import com.laironlf.smartRecipes.data.repository.BarcodeRepository
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 import com.laironlf.smartRecipes.domain.repository.RecipeRepository
 import com.laironlf.smartRecipes.domain.repository.TechnicalRepository
@@ -34,8 +37,11 @@ class DomainModule {
 
     @Provides
     @Singleton
-    fun provideTechnicalRepository(api: RecipesApiService): TechnicalRepository{
-        return TechnicalRepositoryImpl(api)
+    fun provideTechnicalRepository(
+        api: RecipesApiService,
+        barcodeApi: BarcodeRepository
+    ): TechnicalRepository{
+        return TechnicalRepositoryImpl(api, barcodeApi)
     }
 
 }

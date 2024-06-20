@@ -60,4 +60,10 @@ class ProductRepositoryImpl(
     override suspend fun getMeasureTypes(): List<MeasureType> {
         return api.getMeasureTypes().map { it.mapToDomain() }
     }
+
+    override suspend fun getProductByBarcode(barcode: String): Product? {
+        val response = api.getProductByBarcode(barcode)
+        if (response.isSuccessful && response.body() != null) return response.body()!!.mapToProduct()
+        return null
+    }
 }

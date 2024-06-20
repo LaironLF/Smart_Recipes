@@ -14,4 +14,5 @@ interface ProductRepository {
     suspend fun uploadNewProduct(product: ProductPost)
 
     suspend fun getMeasureTypes(): List<MeasureType>
+    suspend fun getProductByBarcode(barcode: String): Product?
 }

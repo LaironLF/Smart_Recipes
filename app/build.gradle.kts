@@ -65,14 +65,20 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    // shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+    // Image Picker pick image from gallery and camera
     implementation("com.github.dhaval2404:imagepicker:2.1")
+    // Number picker
     implementation("io.github.ShawnLin013:number-picker:2.4.13")
+    // QrCode scanner
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
     //for api
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.7.2")
     implementation("com.squareup.okhttp3:logging-interceptor:4.7.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
 
     //serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")

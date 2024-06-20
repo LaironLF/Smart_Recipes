@@ -7,12 +7,13 @@ import com.laironlf.smartRecipes.data.dto.RecipeDTO
 import com.laironlf.smartRecipes.data.dto.RecipeStepDTO
 import com.laironlf.smartRecipes.data.dto.UploadImageResponseDTO
 import com.laironlf.smartRecipes.data.dto.post.ProductPostDTO
+import com.laironlf.smartRecipes.data.dto.post.RealProductPostDTO
 import com.laironlf.smartRecipes.data.dto.post.RecipePostDTO
-import com.laironlf.smartRecipes.domain.models.post.ProductPost
-import com.laironlf.smartRecipes.domain.models.post.RecipePost
 import okhttp3.MultipartBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -56,5 +57,13 @@ interface RecipesApiService {
 
     @POST("products/")
     suspend fun uploadProduct(@Body list: List<ProductPostDTO>)
+
+    @POST("/products/realproduct")
+    suspend fun uploadRealProduct(@Body requestBody: RealProductPostDTO)
+
+    @GET("products/realproduct/product")
+    suspend fun getProductByBarcode(@Header("barcode") barcode: String): Response<ProductDTO>
+
+
 
 }

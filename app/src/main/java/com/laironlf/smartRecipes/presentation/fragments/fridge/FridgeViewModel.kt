@@ -1,18 +1,20 @@
 package com.laironlf.smartRecipes.presentation.fragments.fridge
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.Product
+import com.laironlf.smartRecipes.domain.models.ProductBarcodeData
+import com.laironlf.smartRecipes.domain.models.params.GetProductListParams
 import com.laironlf.smartRecipes.domain.models.params.GetProductListParams.FetchType
 import com.laironlf.smartRecipes.domain.repository.ProductRepository
 import com.laironlf.smartRecipes.domain.usecases.product.AddProductUserUseCase
 import com.laironlf.smartRecipes.domain.usecases.product.AddProductUserUseCase.ProductAlreadyIsException
+import com.laironlf.smartRecipes.domain.usecases.product.GetProductByBarcodeUseCase
 import com.laironlf.smartRecipes.domain.usecases.product.GetProductsUseCase
+import com.laironlf.smartRecipes.domain.usecases.technical.GetProductBarcodeDataUseCase
+import com.laironlf.smartRecipes.domain.usecases.technical.UploadNewRealProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +26,9 @@ import javax.inject.Inject
 class FridgeViewModel @Inject constructor(
     private val getProductsUseCase: GetProductsUseCase,
     private val productRepository: ProductRepository,
-    private val addProductUserUseCase: AddProductUserUseCase
+    private val addProductUserUseCase: AddProductUserUseCase,
+    private val getProductBarcodeDataUseCase: GetProductBarcodeDataUseCase,
+    private val getProductByBarcodeUseCase: GetProductByBarcodeUseCase
 ) : ViewModel() {
 
     private val _state: MutableLiveData<State> = MutableLiveData(State.Loading)
@@ -43,28 +47,39 @@ class FridgeViewModel @Inject constructor(
             fetchType = FetchType.UserProducts
         )
         val list = getProductsUseCase(params)
-        _state.postValue(State.Loaded(list))
+        if (list.isEmpty()) _state.postValue(State.Empty)
+        else _state.postValue(State.Loaded(list))
     } catch (e: Exception){
         e.printStackTrace()
     }
 
-    private suspend fun fetchProducts() = try {
-//        val fetchType = FetchType.AllRemoteProductsExceptUserProducts
-//
-//        val getProductListParams = GetProductListParams(fetchType = fetchType)
-//        _state.postValue(State.Loading)
-//        getProductsUseCase(getProductListParams).apply {
-//            _state.postValue(State.Loaded(this))
-//        }
+    fun onScanProductResult(result: String)= viewModelScope.launch {
+        try {
+            _actions.send(Action.ShowLoadDialog)
+            val product = getProductByBarcodeUseCase(result)
+            if (product != null){
+                _actions.send(Action.CloseLoadDialog)
+                onAddProduct(product)
+            } else {
+                val productInfo = getProductBarcodeDataUseCase(result)
+                _actions.send(Action.ShowRealProductInfo(productInfo))
+            }
+        } catch (e: Exception){
+            e.printStackTrace()
+            _actions.send(Action.CloseLoadDialog)
+            _actions.send(Action.ShowToast("Не удалось просканировать товар"))
+        }
 
-    } catch (e: Exception) {
-        _state.postValue(State.Error)
-        Log.d(TAG, "fetchProducts: ${e.message}")
     }
 
 
+
     fun onProductClick(product: Product, position: Int) {
-        viewModelScope.launch { productRepository.deleteUserProduct(product) }
+        viewModelScope.launch {
+            productRepository.deleteUserProduct(product)
+            val list = getProductsUseCase(GetProductListParams(FetchType.UserProducts))
+            if (list.isEmpty()) _state.postValue(State.Empty)
+        }
     }
 
     fun onAddProduct(product: Product) = viewModelScope.launch {
@@ -80,6 +95,9 @@ class FridgeViewModel @Inject constructor(
 
     sealed interface Action {
         data class ShowToast(val message: String): Action
+        data class ShowRealProductInfo(val productInfo: ProductBarcodeData): Action
+        data object ShowLoadDialog: Action
+        data object CloseLoadDialog: Action
     }
 
     sealed interface State {
@@ -90,5 +108,6 @@ class FridgeViewModel @Inject constructor(
             val products: List<Product>
         ) : State
     }
+
 
 }
