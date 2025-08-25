@@ -82,6 +82,7 @@ class SheetDialogIngredientsViewModel @Inject constructor(
         uploadProductUseCase(product)
         _state.postValue(State.Idle)
         queryText.postValue(newProductTitle.value)
+        fetchProducts(newProductTitle.value.toString())
     } catch (e: Exception){
         e.printStackTrace()
     }
