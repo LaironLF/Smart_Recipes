@@ -99,8 +99,9 @@ class AddRecipeFragment : Fragment() {
         llStepList = StepPostAdapter(binding.llStepList)
     }
 
-    private fun onDeleteAction(ingredientPost: IngredientPost) {
-
+    private fun onDeleteAction(ingredientPost: IngredientPost, position: Int) {
+        viewModel.onDeleteIngredientAction(ingredientPost)
+        llIngredientsList.deleteItem(position)
     }
 
     private fun subscibeToViewModel() {

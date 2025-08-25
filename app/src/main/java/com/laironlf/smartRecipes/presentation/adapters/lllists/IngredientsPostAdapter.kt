@@ -12,7 +12,7 @@ import com.laironlf.smartRecipes.presentation.adapters.lllists.base.BaseLinearLa
 
 class IngredientsPostAdapter(
     parent: ViewGroup,
-    val onDeleteAction: (IngredientPost) -> Unit
+    val onDeleteAction: (IngredientPost, Int) -> Unit
 ): BaseLinearLayoutList<IngredientsPostAdapter.ViewHolder>(parent) {
 
     var ingredients: List<IngredientPost> = emptyList()
@@ -21,6 +21,12 @@ class IngredientsPostAdapter(
             notifyDataSetChanged()
         }
     override fun getItemCount(): Int = ingredients.size
+
+    fun deleteItem(position: Int){
+        val list = ArrayList(ingredients)
+        list.removeAt(position)
+        ingredients = list
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ingredient_post, parent, false)
@@ -37,7 +43,7 @@ class IngredientsPostAdapter(
                 "${ingredient.quantity} ${ingredient.measureType.title}" else ingredient.measureType.title
 
         holder.ivCheckIcon.setOnClickListener {
-            onDeleteAction(ingredient)
+            onDeleteAction(ingredient, position)
         }
     }
 

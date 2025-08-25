@@ -52,6 +52,13 @@ class AddRecipeViewModel @Inject constructor(
         }
     }
 
+    fun onDeleteIngredientAction(ingredient: IngredientPost){
+        val list = _ingredients.value?.toMutableList()
+        if (list != null){
+            list.remove(ingredient)
+            _ingredients.postValue(list.toList())
+        }
+    }
     fun onAddStepAction(step: StepPost){
         val list = _steps.value?.toMutableList()
         if (list != null){
