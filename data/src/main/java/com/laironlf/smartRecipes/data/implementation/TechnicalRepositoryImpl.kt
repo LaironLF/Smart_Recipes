@@ -21,8 +21,7 @@ class TechnicalRepositoryImpl(
     override suspend fun uploadImage(file: File): String {
         val requestFile = file.asRequestBody("image/png".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        val response = api.uploadImage(body)
-        return response.path + response.name
+        return api.uploadImage(body)
     }
 
     override suspend fun getProductBarcodeData(barcode: String): ProductBarcodeData {

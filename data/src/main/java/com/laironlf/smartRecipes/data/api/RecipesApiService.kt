@@ -50,7 +50,7 @@ interface RecipesApiService {
 
     @Multipart
     @POST("upload_image/")
-    suspend fun uploadImage(@Part file: MultipartBody.Part): UploadImageResponseDTO
+    suspend fun uploadImage(@Part file: MultipartBody.Part): String
 
     @POST("recipes/")
     suspend fun uploadRecipe(@Body recipe: RecipePostDTO)
