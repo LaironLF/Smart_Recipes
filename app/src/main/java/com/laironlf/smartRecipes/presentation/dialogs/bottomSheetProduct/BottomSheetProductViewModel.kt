@@ -35,7 +35,7 @@ class BottomSheetProductViewModel @Inject constructor(
             fetchType = GetProductListParams.FetchType.AllRemoteProducts,
             searchString = query
         )
-        val list = getProductsUseCase(params)
+        val list = getProductsUseCase(params).sortedBy { it -> it.title }
         if (list.isEmpty()) _state.postValue(State.Empty)
         else _state.postValue(State.Loaded(list))
     } catch (e: Exception){
