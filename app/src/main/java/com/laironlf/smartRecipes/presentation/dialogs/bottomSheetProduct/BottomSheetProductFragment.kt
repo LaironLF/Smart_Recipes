@@ -42,7 +42,6 @@ class BottomSheetProductFragment(
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerViews()
         subscribeToViewModel()
-        binding.searchProducts.requestFocus()
     }
 
     private fun setupRecyclerViews() {
