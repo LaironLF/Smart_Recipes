@@ -1,8 +1,5 @@
 package com.laironlf.smartRecipes.di
 
-import android.content.Context
-import com.laironlf.smartRecipes.data.api.BarcodeApiService
-import com.laironlf.smartRecipes.data.api.GS1RusApiService
 import com.laironlf.smartRecipes.data.api.RecipesApiService
 import com.laironlf.smartRecipes.data.cache.AppCaching
 import com.laironlf.smartRecipes.data.implementation.ProductRepositoryImpl
@@ -15,7 +12,6 @@ import com.laironlf.smartRecipes.domain.repository.TechnicalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
