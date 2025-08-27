@@ -2,7 +2,9 @@ package com.laironlf.smartRecipes.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.laironlf.smartRecipes.data.api.BarcodeApiService
+import com.laironlf.smartRecipes.data.api.EanOnlineApiService
 import com.laironlf.smartRecipes.data.api.GS1RusApiService
+import com.laironlf.smartRecipes.data.implementation.BarcodeServices.EanOnlineApiServiceImpl
 import com.laironlf.smartRecipes.data.implementation.BarcodeServices.GS1RusApiServiceImpl
 import com.laironlf.smartRecipes.data.repository.BarcodeRepository
 import dagger.Module
@@ -15,6 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 
@@ -34,34 +37,45 @@ class BarcodeModule {
         })
         .build()
 
-    @Provides
-    @Singleton
-    fun provideGS1RusApiService() : GS1RusApiService {
-        return Retrofit.Builder()
-            .baseUrl("https://gepir.gs1ru.org/")
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .client(client)
-            .build()
-            .create(GS1RusApiService::class.java)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideGS1RusApiService() : GS1RusApiService {
+//        return Retrofit.Builder()
+//            .baseUrl("https://gepir.gs1ru.org/")
+//            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+//            .client(client)
+//            .build()
+//            .create(GS1RusApiService::class.java)
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideBarcodeApiService() : BarcodeApiService {
+//        return Retrofit.Builder()
+//            .baseUrl("https://barkode.site/")
+//            .addConverterFactory(ScalarsConverterFactory.create())
+//            .client(client)
+//            .build()
+//            .create(BarcodeApiService::class.java)
+//    }
 
     @Provides
     @Singleton
-    fun provideBarcodeApiService() : BarcodeApiService {
+    fun provideEanOnlineApiService() : EanOnlineApiService {
         return Retrofit.Builder()
-            .baseUrl("https://barkode.site/")
+            .baseUrl("https://ean-online.ru/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .client(client)
             .build()
-            .create(BarcodeApiService::class.java)
+            .create(EanOnlineApiService::class.java)
     }
 
     @Provides
     @Singleton
     fun provideBarcodeRepository(
-        gs1RusApiService: GS1RusApiService
+        eanOnlineApiService: EanOnlineApiService
     ): BarcodeRepository {
-        return GS1RusApiServiceImpl(gs1RusApiService)
+        return EanOnlineApiServiceImpl(eanOnlineApiService)
     }
 
 }
