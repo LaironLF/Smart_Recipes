@@ -1,13 +1,12 @@
 package com.laironlf.smartRecipes.di
 
 import com.laironlf.smartRecipes.data.api.EanOnlineApiService
-import com.laironlf.smartRecipes.data.implementation.BarcodeServices.EanOnlineApiServiceImpl
+import com.laironlf.smartRecipes.data.implementation.barcodeServices.EanOnlineApiServiceImpl
 import com.laironlf.smartRecipes.data.repository.BarcodeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,12 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class BarcodeModule {
-
-    private val json = Json {
-        isLenient = false
-        ignoreUnknownKeys = true
-
-    }
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {

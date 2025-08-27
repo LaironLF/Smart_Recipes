@@ -1,4 +1,4 @@
-package com.laironlf.smartRecipes.data.implementation.BarcodeServices
+package com.laironlf.smartRecipes.data.implementation.barcodeServices
 
 import com.laironlf.smartRecipes.data.api.EanOnlineApiService
 import com.laironlf.smartRecipes.data.repository.BarcodeRepository
