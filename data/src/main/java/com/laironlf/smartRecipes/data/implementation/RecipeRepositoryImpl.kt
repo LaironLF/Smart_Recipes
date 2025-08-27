@@ -24,7 +24,7 @@ class RecipeRepositoryImpl(
         when (params?.fetchType){
             FetchType.All -> api.getRecipes(null).map { it.mapToRecipeStep() }
             FetchType.Saved -> getSavedRecipesList()
-            FetchType.Now -> getFilteredRecipesList(params!!.productsId!!)
+            FetchType.Now -> getFilteredRecipesList(params.productsId!!)
             else -> api.getRecipes(null).map { it.mapToRecipeStep() }
         }
 

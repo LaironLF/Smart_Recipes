@@ -26,7 +26,6 @@ class RecipeStepAdapter(
         parent.removeAllViews()
         for (i in 0..< getItemCount()){
             val viewHolder = createViewHolder()
-            Log.d(TAG, "notifyDataSetChanged: ${viewHolder == null}")
             bindViewHolder(viewHolder, i)
             parent.addView(viewHolder.itemView)
         }

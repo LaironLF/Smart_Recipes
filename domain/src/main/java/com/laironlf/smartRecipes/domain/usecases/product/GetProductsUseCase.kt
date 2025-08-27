@@ -18,7 +18,6 @@ class GetProductsUseCase (
                 allProducts.removeAll(productRepository.getUserProductList())
                 allProducts
             }
-            else -> emptyList()
         }
         if(params.searchString != null && params.searchString != "")
             return productList.filter { it.title.lowercase().contains(params.searchString.lowercase()) }
